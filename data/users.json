@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "username": "Prem1996",
+        "password": "pdkdf2:sha256:260000$...hashed_password_here...",
+        "account_no": "SB624137",
+        "balance": 5000.23,
+        "name": "prem chand"
+    },
+    {
+        "id": 2,
+        "username": "Kiran1987",
+        "password": "pdkdf2:sha256:260000$...hashed_password_here...",
+        "account_no": "SB266501",
+        "balance": 10000.78,
+        "name": "kiran Kumar"
+    },
+    {
+        "id": 3,
+        "username": "Kishore1984",
+        "password":"pdkdf2:sha256:260000$...hashed_password_here...",
+        "account_no": "SB50100509",
+        "balance": 8000.00,
+        "name": "kishore kumar"
+    }
+]

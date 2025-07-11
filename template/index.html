@@ -24,7 +24,7 @@
                 method: 'post',
                 headers: {'content-type': 'application/json'},
                 body: JSON.stringify({
-                    Username: form.get('username'),
+                    username: form.get('username').trim(),
                     password: form.get('password')
                 })
             })

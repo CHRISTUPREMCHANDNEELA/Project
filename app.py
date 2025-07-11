@@ -117,11 +117,11 @@ def init_files():
         default_users = [
         {
             'id': 1,
-            'username': 'rahul123',
-            'password': generate_password_hash('12345'),
-            'account_no': 'SB123456',
-            'balance': 10000.0,
-            'name': 'Rahul'
+            'username': 'Prem1996',
+            'password': generate_password_hash('mypass1234'),
+            'account_no': 'SB624137'
+            'balance': 5000.23,
+            'name': 'prem chand'
         },
         {
             'id': 2,

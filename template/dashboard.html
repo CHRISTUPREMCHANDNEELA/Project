@@ -7,7 +7,7 @@
 </head>
 <body>
     <h2>welcome,<span id="name"></span></h2>
-    <p>Account No: <span id="account no"></span></p>
+    <p>Account No: <span id="account_no"></span></p>
     <p>Balance: $<span id="balance"></span></p>
     
     <a href="/transfer">transfer Funds</a>
@@ -16,14 +16,18 @@
 
     <script>
         const user = JSON.parse(localStorage.getItem('user'));
-        if(!user) window.location.href='/';
+        if(!user){
+             window.location.href='/';
+        } else {
 
-        document.getElementById("name").innertext = user.name;
-        document.getElementById("account no").innertext = user.account_no;
-        document.getElementById("balance").innertext = user.balance;
+        document.getElementById("name").innerText = user.name;
+        document.getElementById("account_no").innerText = user.account_no;
+        document.getElementById("balance").innerText = user.balance.toFixed(2);
+    }
 
         function logout() {
             localStorage.clear();
+            window.location.href = '/';
         }
     </script>
 </body>

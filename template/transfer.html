@@ -9,13 +9,13 @@
     <h2>Fund Transfer</h2>
     <form id="transferForm">
         <label>To account Number</label>
-        <input type="text" name="to_account" required><br>
+        <input type="text" name="to_account" required /><br /><br />
         <label>amount ($):</label><br>
-        <input type="number" name="amount" required><br><br>
+        <input type="number" name="amount" step ="0.01" min ="0" required /><br /><br />
         <button type="submit">Transfer</button>
     </form>
     <P id="resultMsg"></P>
-    <a href="/ dashboard"> ← Back to dashboard</a>
+    <a href="/dashboard"> ← Back to dashboard</a>
     <script>
         const user  = JSON.parse(localStorage.getItem('user'));
         if(!user) window.location.href = '/';
@@ -26,15 +26,19 @@
             fetch('/api/transfer', {
                 method: 'post',
                 headers: { 'content-type':'application/json'},
-                body.json.stringify({
-                    form_user_id: user.id,
-                    to_account: form.get('to_account'),
+                body: JSON.stringify({
+                    from_user_id: user.id,
+                    to_account: form.get('to_account').trim(),
                     amount: parseFloat(form.get('amount'))
                 })
             })
             .then(res => res.json())
             .then(data => {
-                document,getElementById("resultMsg").innertext = data.message;
+                document.getElementById("resultMsg").innerText = data.message;
+            })
+            .catch(err => {
+                document.getElementById("resultMsg").innerText = "Error processing transfer.";
+                console.error("Transfer error:", err);
             });
         });
     </script>

@@ -16,12 +16,12 @@
         .then (res => res.json())
         .then(data => {
             const list = document.getElementById("txnList");
-            if(data.Length === 0) {
+            if (data.Length === 0) {
                 list.innerHTML = "<li> No transaction yet.</li>";
             } else {
                 data.forEach(t =>{
                     const li = document.createElement("li");
-                    li.textContent = ${t.date} -${t.type.toUppercase()} ₹${t.amount};
+                    li.textContent = '${t.date} -${t.type.toUppercase()} ₹${t.amount}';
                     list.appendChild(li);
                 });
             }

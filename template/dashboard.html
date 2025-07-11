@@ -7,15 +7,15 @@
 </head>
 <body>
     <h2>welcome,<span id="name"></span></h2>
-    <p>Account No: <span id="Account no"></span></p>
-    <p>Balance: $<span id="Balance"></span></p>
+    <p>Account No: <span id="account no"></span></p>
+    <p>Balance: $<span id="balance"></span></p>
     
     <a href="/transfer">transfer Funds</a>
     <a href="/transactions">traansactions History</a>
     <a href="/" onclick="logout()">Logout</a>
 
     <script>
-        const user = json.parse(localStorage.getItem('user'));
+        const user = JSON.parse(localStorage.getItem('user'));
         if(!user) window.location.href='/';
 
         document.getElementById("name").innertext = user.name;

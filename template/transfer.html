@@ -9,7 +9,7 @@
     <h2>Fund Transfer</h2>
     <form id="transferForm">
         <label>To account Number</label>
-        <input type="text" name="to account" required><br>
+        <input type="text" name="to_account" required><br>
         <label>amount ($):</label><br>
         <input type="number" name="amount" required><br><br>
         <button type="submit">Transfer</button>
@@ -17,7 +17,7 @@
     <P id="resultMsg"></P>
     <a href="/ dashboard"> ← Back to dashboard</a>
     <script>
-        const user  = json.parse(localStorage.getItem('user'));
+        const user  = JSON.parse(localStorage.getItem('user'));
         if(!user) window.location.href = '/';
 
         document.getElementById("transferForm").addEventListener("submit",function (e) {

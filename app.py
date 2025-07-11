@@ -119,7 +119,7 @@ def init_files():
             'id': 1,
             'username': 'Prem1996',
             'password': generate_password_hash('mypass1234'),
-            'account_no': 'SB624137'
+            'account_no': 'SB624137',
             'balance': 5000.23,
             'name': 'prem chand'
         },

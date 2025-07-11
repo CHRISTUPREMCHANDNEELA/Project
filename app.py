@@ -1,35 +1,35 @@
-from flask import flask, request, jsonfy, render_template
+from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 from datetime import datetime
-from werkzeug.security import generate_password_hash< check_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 import os
 import json
 
-app = flask(__name__)
+app = Flask(__name__)
 CORS(app)
-app.security_key = 'super_secret_key'
+app.secret_key = 'super_secret_key'
 
-users_file = 'users.json'
-Transactions_file + 'transaction.json'
+USERS_FILE = 'users.json'
+TRANSACTIONS_FILE = 'transactions.json'
 
 def load_users():
-    if not os.path.exists(users_file):
+    if not os.path.exists(USERS_FILE):
         return []
-    with open(users_file, 'r') as f:
+    with open(USERS_FILE, 'r') as f:
         return json.load(f)
 
 def save_users(users):
-    with open(users_file, 'w') as f:
+    with open(USERS_FILE, 'w') as f:
         json.dump(users, f, indent=4)
 
 def load_transactions():
-    if not os.path.exists(transactions_file):
+    if not os.path.exists(TRANSACTIONS_FILE):
         return []
-    with open(transaction_file, 'r') as f:
+    with open(TRANSACTIONS_FILE, 'r') as f:
         return json.load(f)
 
 def save_transactions(txns):
-    with open(transactions_file, 'w') as f:
+    with open(TRANSACTIONS_FILE, 'w') as f:
         json.dump(txns, f, indent=4)
 
 @app.route('/')
@@ -48,12 +48,12 @@ def transfer_page():
 def txn_page():
     return render_template('transactions.html')
 
-@app.route('/appi/logoin', methods=['post'])
+@app.route('/api/login', methods=['POST'])
 def login():
     data = request.json
     users = load_users()
     for user in users:
-        if user['username'] == data['username'] and check_paswword_hash(user['password'], data['password']):
+        if user['username'] == data['username'] and check_password_hash(user['password'], data.get['password']):
             return jsonify({
                 'status' : 'success',
                 'user':{
@@ -65,25 +65,36 @@ def login():
             })
     return jsonify({'status': 'error', 'message': 'invalid credentials'}),401
 
-@app.route('/api/transfer', methods=['post'])
+@app.route('/api/transfer', methods=['POST'])
 def transfer():
     data = request.json
     users = load_users()
     txns = load_transactions()
 
-    from user = next((u for u in users if u['id'] == data['from_user_id'],None))
-    to_user = next((u for u in users if u['account_no'] == data['to_account']),None)
+    from_user = next((u for u in users if u['id'] == data['from_user_id']), None)
+    to_user = next((u for u in users if u['account_no'].strip().upper() == data['to_account'].strip().upper()), None)
     
+    if not from_user:
+        return jsonify({'status': 'error', 'message': 'sender not found'}), 404
     if not to_user:
-        return jsonfy({'status': 'error', 'message': 'Recipient not found'}), 404
+        return jsonify({'status': 'error', 'message': 'Recipient not found'}), 404
+    if from_user['account_no'].strip().upper() == to_user['account_no'].strip().upper():
+        return jsonify({'status': 'error', 'message': 'cannot transfer to the same acoount'}), 400
+    if data['amount'] <= 0:
+        return jsonify({'status': 'error', 'message': 'Amount must be greater than zero'}), 400
     if from_user['balance'] < data['amount']:
         return jsonify({'status': 'error', 'message': 'Insufficient balance'}), 400
+    
 
     from_user['balance'] -= data['amount']
     to_user['balance'] += data['amount']
 
-    txns.append({'user_id': from_user['id'], 'type': 'transfer', 'amount': -data['amount'], 'date': datetime.utcnow().isoformat()})
-    txns.append({'user_id': to_user['id'],'type': 'transfer', 'amount': data['amount', 'date': datetime.utcnow().isoformat()]})
+    from_user['balance'] = round(from_user['balance'],2)
+    to_user['balance'] = round(to_user['balance'],2)
+
+    now = datetime.utcnow().isoformat()
+    txns.append({'user_id': from_user['id'], 'type': 'transfer', 'amount': -data['amount'], 'date': now})
+    txns.append({'user_id': to_user['id'],'type': 'transfer', 'amount': data['amount'], 'date': now})
 
     save_users(users)
     save_transactions(txns)

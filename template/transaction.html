@@ -8,7 +8,7 @@
 <body>
     <h2>Transaction History</h2>
     <ul id="txnList"></ul>
-    <a href="/dashboard"> ← Back to dashboard</a>></a>
+    <a href="/dashboard"> ← Back to dashboard</a>
     <script>
         const user = JSON.parse(localStorage.getItem('user'));
         if (!user) window.location.href = '/';
@@ -16,15 +16,19 @@
         .then (res => res.json())
         .then(data => {
             const list = document.getElementById("txnList");
-            if (data.Length === 0) {
+            if (data.length === 0) {
                 list.innerHTML = "<li> No transaction yet.</li>";
             } else {
                 data.forEach(t =>{
                     const li = document.createElement("li");
-                    li.textContent = '${t.date} -${t.type.toUppercase()} ₹${t.amount}';
+                    li.textContent = `${t.date} - ${t.type.toUpperCase()} ₹${t.amount.toFixed(2)}`;
                     list.appendChild(li);
                 });
             }
+        })
+        .catch(err => {
+            console.error('Error fetching transactions:', err);
+            document.getElementById("txnList").innerHTML = "<li>Error loading transactions.</li>";
         });
     </script>
 </body>

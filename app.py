@@ -53,7 +53,7 @@ def login():
     data = request.json
     users = load_users()
     for user in users:
-        if user['username'] == data['username'] and check_password_hash(user['password'], data.get['password']):
+        if user['username'] == data['username'] and check_password_hash(user['password'], data.get('password')):
             return jsonify({
                 'status' : 'success',
                 'user':{
@@ -79,7 +79,7 @@ def transfer():
     if not to_user:
         return jsonify({'status': 'error', 'message': 'Recipient not found'}), 404
     if from_user['account_no'].strip().upper() == to_user['account_no'].strip().upper():
-        return jsonify({'status': 'error', 'message': 'cannot transfer to the same acoount'}), 400
+        return jsonify({'status': 'error', 'message': 'cannot transfer to the same account'}), 400
     if data['amount'] <= 0:
         return jsonify({'status': 'error', 'message': 'Amount must be greater than zero'}), 400
     if from_user['balance'] < data['amount']:
@@ -107,18 +107,44 @@ def get_transactions(user_id):
     user_txns = [t for t in txns if t['user_id'] == user_id]
     user_txns.sort(key=lambda x: x['date'], reverse=True)
     return jsonify([{
-        'date': datetime.formisformat(t['date']).strftime('%Y-%m-%d %H:%M'),
+        'date': datetime.fromisoformat(t['date']).strftime('%Y-%m-%d %H:%M'),
         'type': t['type'],
         'amount': t['amount']
     } for t in user_txns])
 
 def init_files():
-    if not os.path.exists(ISERS_FILE):
-        default_user = {
+    if not os.path.exists(USERS_FILE):
+        default_users = [
+        {
             'id': 1,
             'username': 'rahul123',
             'password': generate_password_hash('12345'),
             'account_no': 'SB123456',
             'balance': 10000.0,
             'name': 'Rahul'
+        },
+        {
+            'id': 2,
+            'username': 'Kiran1987',
+            'password': generate_password_hash('pass1234'),
+            'account_no': 'SB266501',
+            'balance': 10000.78,
+            'name': 'Kiran Kumar'
+        },
+        {
+            'id': 3,
+            'username': 'Kishore1984',
+            'password': generate_password_hash('pragna2014'),
+            'account_no': 'SB50100509',
+            'balance': 8000.00,
+            'name': 'Kishore Kumar'
         }
+        ]
+        save_users(default_users)
+
+    if not os.path.exists(TRANSACTIONS_FILE):
+        save_transactions([])
+
+if __name__  == '__main__':
+    init_files()
+    app.run(debug=True)

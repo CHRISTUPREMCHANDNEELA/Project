@@ -65,3 +65,49 @@ def login():
             })
     return jsonify({'status': 'error', 'message': 'invalid credentials'}),401
 
+@app.route('/api/transfer', methods=['post'])
+def transfer():
+    data = request.json
+    users = load_users()
+    txns = load_transactions()
+
+    from user = next((u for u in users if u['id'] == data['from_user_id'],None))
+    to_user = next((u for u in users if u['account_no'] == data['to_account']),None)
+    
+    if not to_user:
+        return jsonfy({'status': 'error', 'message': 'Recipient not found'}), 404
+    if from_user['balance'] < data['amount']:
+        return jsonify({'status': 'error', 'message': 'Insufficient balance'}), 400
+
+    from_user['balance'] -= data['amount']
+    to_user['balance'] += data['amount']
+
+    txns.append({'user_id': from_user['id'], 'type': 'transfer', 'amount': -data['amount'], 'date': datetime.utcnow().isoformat()})
+    txns.append({'user_id': to_user['id'],'type': 'transfer', 'amount': data['amount', 'date': datetime.utcnow().isoformat()]})
+
+    save_users(users)
+    save_transactions(txns)
+
+    return jsonify({'status': 'success', 'message': 'Transfer successful'})
+
+@app.route('/api/transactions/<int:user_id>', methods=['GET'])
+def get_transactions(user_id):
+    txns = load_transactions()
+    user_txns = [t for t in txns if t['user_id'] == user_id]
+    user_txns.sort(key=lambda x: x['date'], reverse=True)
+    return jsonify([{
+        'date': datetime.formisformat(t['date']).strftime('%Y-%m-%d %H:%M'),
+        'type': t['type'],
+        'amount': t['amount']
+    } for t in user_txns])
+
+def init_files():
+    if not os.path.exists(ISERS_FILE):
+        default_user = {
+            'id': 1,
+            'username': 'rahul123',
+            'password': generate_password_hash('12345'),
+            'account_no': 'SB123456',
+            'balance': 10000.0,
+            'name': 'Rahul'
+        }

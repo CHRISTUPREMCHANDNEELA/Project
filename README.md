@@ -2,7 +2,7 @@
 
 Banking Portal
 
-A small web-based banking portal for Saraswat Bank,developed by a small IT company,to manage customer and account details using HTML, CSS, and JavaScript.
+A small web-based banking portal for Kangra Cooperative bank ,developed by a small IT company,to manage customer and account details using HTML, CSS, and JavaScript.
 
 Features
 

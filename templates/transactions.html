@@ -22,8 +22,8 @@
             } else {
                 data.forEach(t =>{
                     const li = document.createElement("li");
-                    li.textContent = `${t.date} - ${t.type.toUpperCase()} ₹${t.amount.toFixed(2)}`;
-                    <button onclick ="deleteTransaction(${t.id})" style="margin-left: 10px;">Delete</button>
+                    li.innerHTML = `${t.date} - ${t.type.toUpperCase()} ₹${t.amount.toFixed(2)}
+                    <button onclick ="deleteTransaction(${t.id})" style="margin-left: 10px;">Delete</button>`;
                     list.appendChild(li);
                 });
             }
@@ -39,17 +39,17 @@
         fetch(`/api/transactions/${id}`,{
             method: 'DELETE'
         })
-        ,then(res => res.json())
+        .then(res => res.json())
         .then(data => {
             if (data.status === 'success') {
                 alert('Transaction deleted.');
                 loadTransactions();
             } else {
-                aler('Failed to delete: +data.message');
+                alert('Failed to delete: + data.message');
             }
         })
         .catch(err => {
-            console.error('Error deleting transaction:' err);
+            console.error('Error deleting transaction:', err);
             alert('Error deleteing transaction.');
         });
     }

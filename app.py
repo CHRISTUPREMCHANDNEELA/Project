@@ -107,18 +107,21 @@ def get_transactions(user_id):
     user_txns = [t for t in txns if t['user_id'] == user_id]
     user_txns.sort(key=lambda x: x['date'], reverse=True)
     return jsonify([{
+        'id': i,
         'date': datetime.fromisoformat(t['date']).strftime('%Y-%m-%d %H:%M'),
         'type': t['type'],
         'amount': t['amount']
-    } for t in user_txns])
+    } for i, t in enumerate(user_txns)])
 
 @app.route('/api/transactions/<int:txn_id>', methods=['DELETE'])
 def delete_transaction(txn_id):
     txns = load_transactions()
-    updated_txns = [txn for txn in txn if txn.get('id') != txn_id]
     
-    if len(updated_txns) ==len(txns):
-        return jsonify({'status': 'success', 'message': 'Transaction deleted'})
+    if txn_id < 0 or txn_id >= len(txns):
+       return jsonify({'status': 'error', 'message': 'Transaction not found'}),404
+    del txns[txn_id]
+    save_transactions(txns)
+    return jsonify({'status': 'success'})
 
 def init_files():
     if not os.path.exists(USERS_FILE):

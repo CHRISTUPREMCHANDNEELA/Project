@@ -112,6 +112,14 @@ def get_transactions(user_id):
         'amount': t['amount']
     } for t in user_txns])
 
+@app.route('/api/transactions/<int:txn_id>', methods=['DELETE'])
+def delete_transaction(txn_id):
+    txns = load_transactions()
+    updated_txns = [txn for txn in txn if txn.get('id') != txn_id]
+    
+    if len(updated_txns) ==len(txns):
+        return jsonify({'status': 'success', 'message': 'Transaction deleted'})
+
 def init_files():
     if not os.path.exists(USERS_FILE):
         default_users = [

@@ -12,6 +12,7 @@
     <script>
         const user = JSON.parse(localStorage.getItem('user'));
         if (!user) window.location.href = '/';
+    function loadTransactions() {
         fetch('/api/transactions/' + user.id)
         .then (res => res.json())
         .then(data => {
@@ -22,6 +23,7 @@
                 data.forEach(t =>{
                     const li = document.createElement("li");
                     li.textContent = `${t.date} - ${t.type.toUpperCase()} ₹${t.amount.toFixed(2)}`;
+                    <button onclick ="deleteTransaction(${t.id})" style="margin-left: 10px;">Delete</button>
                     list.appendChild(li);
                 });
             }
@@ -30,6 +32,28 @@
             console.error('Error fetching transactions:', err);
             document.getElementById("txnList").innerHTML = "<li>Error loading transactions.</li>";
         });
+    }
+
+    function deleteTransaction(id) {
+        if (!confirm("sure you want to delte this transaction?")) return;
+        fetch(`/api/transactions/${id}`,{
+            method: 'DELETE'
+        })
+        ,then(res => res.json())
+        .then(data => {
+            if (data.status === 'success') {
+                alert('Transaction deleted.');
+                loadTransactions();
+            } else {
+                aler('Failed to delete: +data.message');
+            }
+        })
+        .catch(err => {
+            console.error('Error deleting transaction:' err);
+            alert('Error deleteing transaction.');
+        });
+    }
+    loadTransactions();
     </script>
 </body>
 </html>

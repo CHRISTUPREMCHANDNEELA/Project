@@ -12,9 +12,6 @@ app.secret_key = 'super_secret_key'
 USERS_FILE = 'users.json'
 TRANSACTIONS_FILE = 'transactions.json'
 
-USERS_FILE = '/home/site/wwwroot/users.json'
-TRANSACTIONS_FILE = '/home/site/wwwroot/transactions.json'
-
 def load_users():
     if not os.path.exists(USERS_FILE):
         return []
@@ -51,10 +48,6 @@ def transfer_page():
 def txn_page():
     return render_template('transactions.html')
     
-@app.route('/debug/users')
-def debug_users():
-    users = load_users()
-    return jsonify(users)
 
 @app.route('/api/login', methods=['POST'])
 def login():
@@ -167,5 +160,4 @@ def init_files():
 if __name__  == '__main__':
     init_files()
     app.run(debug=True)
-    port = int(os.environ.get("port",8000))
-    app.run(host='0.0.0.0', port = port)
+    

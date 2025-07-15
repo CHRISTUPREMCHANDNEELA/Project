@@ -65,4 +65,10 @@ To remove a transactions from the transaction history, a delete button is displa
 
 
 Refernces : chatgpt and youtube for the coding
+https://chatgpt.com/share/6876169e-2d74-800a-8a10-2aabd78a6209
+https://www.youtube.com/watch?v=FazgJVnrVuI&t=1810s&pp=ygUbaHRtbCBjc3MgamF2YXNjcmlwdCBwcm9qZWN0
+https://youtu.be/8ZnB2jYlGl0?si=J6QldVfXurKVNcHS
+https://youtu.be/CQZxeoQeo5c?si=ThQzYEBdivzzWDaz
+https://chatgpt.com/share/68761f1b-8104-800a-9c54-3c88c67f36bd
+https://youtube.com/shorts/T9gZScRvd_0?si=DVJIXoKeKbOPnyN-
             

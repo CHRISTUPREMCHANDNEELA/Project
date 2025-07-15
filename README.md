@@ -15,6 +15,8 @@ Fund Transfer to other banks and within the bank
 Transaction Historycan be displayed withdrawls and deposit
 
 
+
+
 1.Introduction
  
 The Banking portal is designed for the Bank Kangra Cooperative bank by the small IT company Feba technologies. This is the basic web page for the users to login to their account check for the account balance and transfer funds to the other accounts and it allows users to transaction history; the main concept of the Bank portal web page is to create a user friendly to the users. We use CRUD operations like (Read, update, Create, Delete) using separation of Frontend and Backend.
@@ -57,3 +59,10 @@ To remove a transactions from the transaction history, a delete button is displa
 2.5 User interface creation: 
 ·                  Simple html and tables 
 ·                  Data loading using javascript API calls without having page reloading 
+
+
+
+
+
+Refernces : chatgpt and youtube for the coding
+            

@@ -16,6 +16,15 @@ Transaction Historycan be displayed withdrawls and deposit
 
 
 
+I selcted one of my cousins company called FEBA TECHNOLOGIES which is located in HYDERABAD India.
+
+i have my own idea to create a prject which is related to Bank sector along with that i decided what are my requirements to have in my project like i need to have a login page of the user once the user logins he shpuld be able to see his accou9nt number and balance along with this wanted to implement a button to transfer funds and transactions and logout
+
+with my sepecifications taking reference from chatgpt and yoytube i have written each of line of my code i changed complete user page and some part of backend code which i added delete operation based on the remaing part of the code the basic html code i referred youtube vedios and written the code
+
+the complete documentation was written on my own words
+
+
 
 1.Introduction
  
